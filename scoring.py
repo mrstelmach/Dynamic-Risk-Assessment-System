@@ -14,7 +14,7 @@ from sklearn import metrics
 from training import get_vars_from_pandas
 
 
-def score_model(model_path, data_path, result_path):
+def score_model(model_path, data_path, result_path, target_col='exited'):
     """
     Function takes a trained model, loads test data, calculates 
     an F1 score for the model relative to the test data and writes the result 
@@ -24,7 +24,7 @@ def score_model(model_path, data_path, result_path):
         model = pickle.load(model_file)
     
     df = pd.read_csv(data_path)
-    X, y = get_vars_from_pandas(df)
+    X, y = get_vars_from_pandas(df, target_col)
     y_pred = model.predict(X)
     f1_score = metrics.f1_score(y, y_pred)
     

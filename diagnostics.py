@@ -20,7 +20,7 @@ def model_predictions(pandas_df, model_path):
     """Read the deployed model and calculate predictions for a dataset."""
     with open(model_path, 'rb') as model_file:
         model = pickle.load(model_file)
-    X, _ = get_vars_from_pandas(pandas_df)
+    X = get_vars_from_pandas(pandas_df, target_col=None)
     predictions = model.predict(X).tolist()
     return predictions
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
         df, os.path.join(prod_deployment_path, 'trainedmodel.pkl')
     )
     dataframe_summary(
-        df, exclude='exited'
+        df, exclude=['exited']
     )
     missing_data_pct(
         df

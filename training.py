@@ -12,22 +12,24 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 
-def get_vars_from_pandas(pandas_df, target_col='exited',
+def get_vars_from_pandas(pandas_df, target_col=None,
                          predictors_list=['lastmonth_activity',
                                           'lastyear_activity',
                                           'number_of_employees']):
-    """Get X and y from provided pandas data frame."""
-    X, y = (pandas_df[predictors_list].to_numpy(),
-            pandas_df[target_col].to_numpy())
+    """Get X and y (if provided) from a given pandas data frame."""
+    X = pandas_df[predictors_list].to_numpy()
+    if target_col is None:
+        return X
+    y = pandas_df[target_col].to_numpy()
     return X, y
 
 
-def train_model(pandas_df, model_dir):
+def train_model(pandas_df, model_dir, target_col='exited'):
     """
     Script for training logistic regression model and saving to model_dir.
     """
     
-    X, y = get_vars_from_pandas(pandas_df)
+    X, y = get_vars_from_pandas(pandas_df, target_col)
     
     # use logistic regression for training
     lr_model = LogisticRegression(
