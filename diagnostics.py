@@ -16,10 +16,14 @@ import pandas as pd
 from training import get_vars_from_pandas
 
 
-def model_predictions(pandas_df, model_path):
+def model_predictions(pandas_df, model_path=None, model_object=None):
     """Read the deployed model and calculate predictions for a dataset."""
-    with open(model_path, 'rb') as model_file:
-        model = pickle.load(model_file)
+    if model_object is not None:
+        model_path = None
+        model = model_object
+    if model_path is not None:
+        with open(model_path, 'rb') as model_file:
+            model = pickle.load(model_file)
     X = get_vars_from_pandas(pandas_df, target_col=None)
     predictions = model.predict(X).tolist()
     return predictions
