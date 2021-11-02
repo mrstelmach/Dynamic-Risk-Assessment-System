@@ -7,7 +7,6 @@ Data ingestion module.
 import json
 import os
 
-import numpy as np
 import pandas as pd
 
 
@@ -47,7 +46,7 @@ if __name__ == '__main__':
     df_final.to_csv(os.path.join(output_folder_path, 'finaldata.csv'),
                     index=False)
     with open(
-        os.path.join(output_folder_path, 'ingestedfiles.txt'), 'a'
+        os.path.join(output_folder_path, 'ingestedfiles.txt'), 'w'
         ) as record_file:
         for line in records:
             record_file.write(line + '\n')
