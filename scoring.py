@@ -1,9 +1,17 @@
-import pandas as pd
-import pickle
-import os
-from sklearn import metrics
-from training import get_vars_from_pandas
+# -*- coding: utf-8 -*-
+
+"""
+Module for ML model scoring.
+"""
+
 import json
+import os
+import pickle
+
+import pandas as pd
+from sklearn import metrics
+
+from training import get_vars_from_pandas
 
 
 def score_model(model_path, data_path, result_path):

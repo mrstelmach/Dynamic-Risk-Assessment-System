@@ -1,13 +1,12 @@
-from flask import Flask, session, jsonify, request
-import pandas as pd
-import numpy as np
-import pickle
+# -*- coding: utf-8 -*-
+
+"""
+Module for model deployment.
+"""
+
+import json
 import os
 from shutil import copyfile
-from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-import json
 
 
 def store_model_into_pickle(model_path, score_path, recor_path, target_dir):
