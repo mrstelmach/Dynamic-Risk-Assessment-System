@@ -1,45 +1,89 @@
+# -*- coding: utf-8 -*-
 
-import pandas as pd
-import numpy as np
-import timeit
-import os
+"""
+Module for data and model diagnostics.
+"""
+
 import json
+import os
+import pickle
+import subprocess
+import timeit
 
-##################Load config.json and get environment variables
-with open('config.json','r') as f:
-    config = json.load(f) 
+import numpy as np
+import pandas as pd
 
-dataset_csv_path = os.path.join(config['output_folder_path']) 
-test_data_path = os.path.join(config['test_data_path']) 
+from training import get_vars_from_pandas
 
-##################Function to get model predictions
-def model_predictions():
-    #read the deployed model and a test dataset, calculate predictions
-    return #return value should be a list containing all predictions
 
-##################Function to get summary statistics
-def dataframe_summary():
-    #calculate summary statistics here
-    return #return value should be a list containing all summary statistics
+def model_predictions(pandas_df, model_path):
+    """Read the deployed model and calculate predictions for a dataset."""
+    with open(model_path, 'rb') as model_file:
+        model = pickle.load(model_file)
+    X, _ = get_vars_from_pandas(pandas_df)
+    predictions = model.predict(X).tolist()
+    return predictions
 
-##################Function to get timings
-def execution_time():
-    #calculate timing of training.py and ingestion.py
-    return #return a list of 2 timing values in seconds
 
-##################Function to check dependencies
+def dataframe_summary(pandas_df, exclude=None):
+    """calculate summary statistics of data frame."""
+    df_num = pandas_df.select_dtypes(include=np.number).copy()
+    if exclude is not None:
+        df_num.drop(exclude, axis=1, inplace=True)
+
+    summary_stats = []
+    for num_col in df_num:
+        summary_stats.append([num_col, 'mean', df_num[num_col].mean()])
+        summary_stats.append([num_col, 'median', df_num[num_col].median()])
+        summary_stats.append([num_col, 'std', df_num[num_col].std()])
+
+    return summary_stats
+
+
+def missing_data_pct(pandas_df):
+    """Return the percentage of missing data for each column."""
+    return list(pandas_df.isna().sum()/len(pandas_df))
+
+
+def execution_time(list_of_scripts):
+    """Calculate timings of provided scripts (defined by paths)."""
+    timings = []
+    for script in list_of_scripts:
+        start_time = timeit.default_timer()
+        os.system(f'python {script}')
+        timing = timeit.default_timer() - start_time
+        timings.append(timing)
+    return timings
+
+
 def outdated_packages_list():
-    #get a list of 
+    """Get a table with outdated packages."""
+    outdated_pckgs = subprocess.run(
+        ["pip", "list", "--outdated"], 
+        capture_output=True, 
+        text=True
+    )
+    return outdated_pckgs.stdout
 
 
 if __name__ == '__main__':
-    model_predictions()
-    dataframe_summary()
-    execution_time()
+    with open('config.json','r') as f:
+        config = json.load(f) 
+    dataset_csv_path = os.path.join(config['output_folder_path'])
+    prod_deployment_path = os.path.join(config['prod_deployment_path'])
+
+    df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
+
+    model_predictions(
+        df, os.path.join(prod_deployment_path, 'trainedmodel.pkl')
+    )
+    dataframe_summary(
+        df, exclude='exited'
+    )
+    missing_data_pct(
+        df
+    )
+    execution_time(
+        ['ingestion.py', 'training.py']
+    )
     outdated_packages_list()
-
-
-
-
-
-    
