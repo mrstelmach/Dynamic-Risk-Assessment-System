@@ -52,11 +52,11 @@ def diagnose():
     exec_time = execution_time(['ingestion.py', 'training.py'])
     miss_pct = missing_data_pct(custom_data)
     dep_check = outdated_packages_list()
-    return str({
-        "execution_time": exec_time,
-        "missing_percentage": miss_pct,
-        "dependencies_check": dep_check
-    })
+    return str(f'\
+execution_time: {exec_time}\n\
+missing_percentage: {miss_pct}\n\
+dependencies_check: {dep_check}'
+)
 
 
 if __name__ == "__main__":    
