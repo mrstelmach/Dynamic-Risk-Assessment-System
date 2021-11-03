@@ -1,12 +1,18 @@
-from flask import Flask, session, jsonify, request
-import pandas as pd
-import numpy as np
-import pickle
+# -*- coding: utf-8 -*-
+
+"""
+Flask app with four endpoints for checking model and data quality.
+"""
+
 import json
 import os
+import pickle
 
-from diagnostics import (model_predictions, dataframe_summary, execution_time, 
-                         missing_data_pct, outdated_packages_list)
+import pandas as pd
+from flask import Flask, request
+
+from diagnostics import (dataframe_summary, execution_time, missing_data_pct,
+                         model_predictions, outdated_packages_list)
 from scoring import score_model
 
 app = Flask(__name__)

@@ -1,5 +1,12 @@
-import os
+# -*- coding: utf-8 -*-
+
+"""
+Api calls for deplyed flask app.
+"""
+
 import json
+import os
+
 import requests
 
 with open('config.json', 'r') as f:
