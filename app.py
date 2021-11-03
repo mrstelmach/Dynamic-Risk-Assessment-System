@@ -5,7 +5,8 @@ import pickle
 import json
 import os
 
-from diagnostics import model_predictions, dataframe_summary
+from diagnostics import (model_predictions, dataframe_summary, execution_time, 
+                         missing_data_pct, outdated_packages_list)
 from scoring import score_model
 
 app = Flask(__name__)
@@ -14,8 +15,8 @@ app.secret_key = '1652d576-484a-49fd-913a-6879acfa6ba4'
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-dataset_csv_path = os.path.join(config['output_folder_path'])
-data_path = os.path.join(dataset_csv_path, 'finaldata.csv')
+custom_data_path = os.path.join(config['output_folder_path'], 'finaldata.csv')
+custom_data = pd.read_csv(custom_data_path)
 
 model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 with open(model_path, 'rb') as model_file:
@@ -41,18 +42,21 @@ def score():
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():
     """Check means, medians, and modes for each column."""
-    df = pd.read_csv(data_path)
-    summary_stats = dataframe_summary(df, exclude='exited')
+    summary_stats = dataframe_summary(custom_data, exclude='exited')
     return str(summary_stats)
 
 
-"""
-#######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
-def stats():        
-    #check timing and percent NA values
-    return #add return value for all diagnostics
-"""
+def diagnose():
+    """Check timing, percentage of NA values and dependencies."""
+    exec_time = execution_time(['ingestion.py', 'training.py'])
+    miss_pct = missing_data_pct(custom_data)
+    dep_check = outdated_packages_list()
+    return str({
+        "execution_time": exec_time,
+        "missing_percentage": miss_pct,
+        "dependencies_check": dep_check
+    })
 
 
 if __name__ == "__main__":    

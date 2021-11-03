@@ -8,7 +8,7 @@ response1 = requests.post(
     ).text
 response2 = requests.get(f'{URL}/scoring').text
 response3 = requests.get(f'{URL}/summarystats').text
-response4 = #put an API call here
+response4 = requests.get(f'{URL}/diagnostics').text
 
 #combine all API responses
 responses = #combine reponses here
