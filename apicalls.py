@@ -1,12 +1,11 @@
 import requests
 
-#Specify a URL that resolves to your workspace
-URL = "http://127.0.0.1/"
+URL = "http://127.0.0.1:8000"
 
-
-
-#Call each API endpoint and store the responses
-response1 = #put an API call here
+response1 = requests.post(
+    f'{URL}/prediction',
+    json={'data_path': 'testdata/testdata.csv'}
+    ).text
 response2 = #put an API call here
 response3 = #put an API call here
 response4 = #put an API call here
