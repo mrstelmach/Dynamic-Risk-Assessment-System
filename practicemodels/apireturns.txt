@@ -1,9 +1,10 @@
-[0, 1, 1, 1, 1]
-0.5714285714285715
-[['lastmonth_activity', 'mean', 165.65384615384616], ['lastmonth_activity', 'median', 73.0], ['lastmonth_activity', 'std', 284.0332293669447], ['lastyear_activity', 'mean', 1502.923076923077], ['lastyear_activity', 'median', 955.0], ['lastyear_activity', 'std', 2192.6449584568304], ['number_of_employees', 'mean', 26.884615384615383], ['number_of_employees', 'median', 14.0], ['number_of_employees', 'std', 31.353885785435814]]
-execution_time: [0.28653508400020655, 0.5842436460006866]
+predictions_for_testdata/testdata.csv: [0, 1, 1, 1, 1]
+f1_score: 0.5714285714285715
+summary_statistics: [['lastmonth_activity', 'mean', 165.65384615384616], ['lastmonth_activity', 'median', 73.0], ['lastmonth_activity', 'std', 284.0332293669447], ['lastyear_activity', 'mean', 1502.923076923077], ['lastyear_activity', 'median', 955.0], ['lastyear_activity', 'std', 2192.6449584568304], ['number_of_employees', 'mean', 26.884615384615383], ['number_of_employees', 'median', 14.0], ['number_of_employees', 'std', 31.353885785435814]]
+execution_time: [0.30078001499987295, 0.5763932690006186]
 missing_percentage: [0.0, 0.0, 0.0, 0.0, 0.0]
-dependencies_check: Package            Version Latest Type
+dependencies_check: 
+Package            Version Latest Type
 ------------------ ------- ------ -----
 cffi               1.14.0  1.15.0 wheel
 charset-normalizer 2.0.4   2.0.7  wheel

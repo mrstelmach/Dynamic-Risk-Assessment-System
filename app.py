@@ -61,7 +61,7 @@ def diagnose():
     return str(f'\
 execution_time: {exec_time}\n\
 missing_percentage: {miss_pct}\n\
-dependencies_check: {dep_check}'
+dependencies_check: \n{dep_check}'
 )
 
 
