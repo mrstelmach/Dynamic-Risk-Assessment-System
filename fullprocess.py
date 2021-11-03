@@ -47,5 +47,8 @@ else:
     exit(0)
 
 
-##################Diagnostics and reporting
-#run diagnostics.py and reporting.py for the re-deployed model
+# Run diagnostics and reporting for redeployed model.
+print('Diagnostics.')
+os.system('python apicalls.py')
+print('Reporting.')
+os.system('python reporting.py')
