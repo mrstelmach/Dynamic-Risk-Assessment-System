@@ -9,6 +9,11 @@ import os
 
 import pandas as pd
 
+with open('config.json','r') as f:
+    config = json.load(f)
+input_folder_path = config['input_folder_path']
+output_folder_path = config['output_folder_path']
+
 
 def merge_multiple_dataframe(directory):
     """
@@ -34,11 +39,6 @@ def merge_multiple_dataframe(directory):
 
 
 if __name__ == '__main__':
-    with open('config.json','r') as f:
-        config = json.load(f)
-    input_folder_path = config['input_folder_path']
-    output_folder_path = config['output_folder_path']
-    
     data_records_dict = merge_multiple_dataframe(input_folder_path)
     df_final, records = data_records_dict['data'], data_records_dict['files']
     df_final.to_csv(os.path.join(output_folder_path, 'finaldata.csv'),

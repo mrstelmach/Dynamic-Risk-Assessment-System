@@ -8,6 +8,12 @@ import json
 import os
 from shutil import copyfile
 
+with open('config.json','r') as f:
+    config = json.load(f)
+dataset_csv_path = os.path.join(config['output_folder_path'])
+output_model_path = os.path.join(config['output_model_path'])
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
+
 
 def store_model_into_pickle(model_path, score_path, recor_path, target_dir):
     """
@@ -20,12 +26,6 @@ def store_model_into_pickle(model_path, score_path, recor_path, target_dir):
 
 
 if __name__ == "__main__":
-    with open('config.json','r') as f:
-        config = json.load(f)
-    dataset_csv_path = os.path.join(config['output_folder_path'])
-    output_model_path = os.path.join(config['output_model_path'])
-    prod_deployment_path = os.path.join(config['prod_deployment_path'])
-    
     store_model_into_pickle(
         os.path.join(output_model_path, 'trainedmodel.pkl'),
         os.path.join(output_model_path, 'latestscore.txt'),

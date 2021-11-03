@@ -15,6 +15,11 @@ from sklearn import metrics
 from diagnostics import model_predictions
 from training import get_vars_from_pandas
 
+with open('config.json','r') as f:
+    config = json.load(f)
+test_data_path = os.path.join(config['test_data_path'])
+output_model_path = os.path.join(config['output_model_path'])
+
 
 def score_model(data_path, model_path, save_path, target_col):
     """
@@ -36,12 +41,7 @@ def score_model(data_path, model_path, save_path, target_col):
     plt.close()
 
 
-if __name__ == '__main__':
-    with open('config.json','r') as f:
-        config = json.load(f)
-    test_data_path = os.path.join(config['test_data_path'])
-    output_model_path = os.path.join(config['output_model_path'])
-    
+if __name__ == '__main__':    
     score_model(
         os.path.join(test_data_path, 'testdata.csv'),
         os.path.join(output_model_path, 'trainedmodel.pkl'),

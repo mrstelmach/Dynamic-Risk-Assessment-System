@@ -11,6 +11,11 @@ import pickle
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
+with open('config.json', 'r') as f:
+    config = json.load(f) 
+dataset_csv_path = os.path.join(config['output_folder_path']) 
+model_path = os.path.join(config['output_model_path']) 
+
 
 def get_vars_from_pandas(pandas_df, target_col=None,
                          predictors_list=['lastmonth_activity',
@@ -49,10 +54,5 @@ def train_model(pandas_df, model_dir, target_col='exited'):
 
 
 if __name__ == "__main__":
-    with open('config.json', 'r') as f:
-        config = json.load(f) 
-    dataset_csv_path = os.path.join(config['output_folder_path']) 
-    model_path = os.path.join(config['output_model_path']) 
-    
     df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
     train_model(df, model_path)
