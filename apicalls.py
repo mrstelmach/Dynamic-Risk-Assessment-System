@@ -6,7 +6,7 @@ response1 = requests.post(
     f'{URL}/prediction',
     json={'data_path': 'testdata/testdata.csv'}
     ).text
-response2 = #put an API call here
+response2 = requests.get(f'{URL}/scoring').text
 response3 = #put an API call here
 response4 = #put an API call here
 

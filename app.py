@@ -6,11 +6,12 @@ import json
 import os
 
 from diagnostics import model_predictions
+from scoring import score_model
 
 app = Flask(__name__)
 app.secret_key = '1652d576-484a-49fd-913a-6879acfa6ba4'
 
-with open('config.json','r') as f:
+with open('config.json', 'r') as f:
     config = json.load(f) 
 dataset_csv_path = os.path.join(config['output_folder_path'])
 
@@ -28,13 +29,14 @@ def predict():
     return str(predictions)
 
 
-"""
-#######################Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
 def stats():        
-    #check the score of the deployed model
-    return #add return value (a single F1 score number)
+    """Check the score of the deployed model."""
+    f1_score = score_model()
+    return str(f1_score)
 
+
+"""
 #######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
