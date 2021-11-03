@@ -15,6 +15,11 @@ import pandas as pd
 
 from training import get_vars_from_pandas
 
+with open('config.json','r') as f:
+    config = json.load(f) 
+dataset_csv_path = os.path.join(config['output_folder_path'])
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
+
 
 def model_predictions(pandas_df, model_path=None, model_object=None):
     """Read the deployed model and calculate predictions for a dataset."""
@@ -71,11 +76,6 @@ def outdated_packages_list():
 
 
 if __name__ == '__main__':
-    with open('config.json','r') as f:
-        config = json.load(f) 
-    dataset_csv_path = os.path.join(config['output_folder_path'])
-    prod_deployment_path = os.path.join(config['prod_deployment_path'])
-
     df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
 
     model_predictions(
