@@ -24,7 +24,7 @@ with open('config.json', 'r') as f:
 custom_data_path = os.path.join(config['output_folder_path'], 'finaldata.csv')
 custom_data = pd.read_csv(custom_data_path)
 
-model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
+model_path = os.path.join(config['prod_deployment path'], 'trainedmodel.pkl')
 with open(model_path, 'rb') as model_file:
     prediction_model = pickle.load(model_file)
 
