@@ -14,7 +14,7 @@ from sklearn import metrics
 from training import get_vars_from_pandas
 
 
-def score_model(model_path, data_path, result_path, target_col='exited'):
+def score_model(model_path, data_path, result_path=None, target_col='exited'):
     """
     Function takes a trained model, loads test data, calculates 
     an F1 score for the model relative to the test data and writes the result 
@@ -28,8 +28,11 @@ def score_model(model_path, data_path, result_path, target_col='exited'):
     y_pred = model.predict(X)
     f1_score = metrics.f1_score(y, y_pred)
     
-    with open(result_path, 'w') as result_file:
-        result_file.write(str(f1_score))
+    if result_path is not None:
+        with open(result_path, 'w') as result_file:
+            result_file.write(str(f1_score))
+
+    return f1_score
 
 
 if __name__ == "__main__":
