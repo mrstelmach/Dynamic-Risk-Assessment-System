@@ -5,15 +5,17 @@ import pickle
 import json
 import os
 
-from diagnostics import model_predictions
+from diagnostics import model_predictions, dataframe_summary
 from scoring import score_model
 
 app = Flask(__name__)
 app.secret_key = '1652d576-484a-49fd-913a-6879acfa6ba4'
 
 with open('config.json', 'r') as f:
-    config = json.load(f) 
+    config = json.load(f)
+
 dataset_csv_path = os.path.join(config['output_folder_path'])
+data_path = os.path.join(dataset_csv_path, 'finaldata.csv')
 
 model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 with open(model_path, 'rb') as model_file:
@@ -30,19 +32,21 @@ def predict():
 
 
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def stats():        
+def score():
     """Check the score of the deployed model."""
     f1_score = score_model()
     return str(f1_score)
 
 
-"""
-#######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
-def stats():        
-    #check means, medians, and modes for each column
-    return #return a list of all calculated summary statistics
+def stats():
+    """Check means, medians, and modes for each column."""
+    df = pd.read_csv(data_path)
+    summary_stats = dataframe_summary(df, exclude='exited')
+    return str(summary_stats)
 
+
+"""
 #######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
 def stats():        

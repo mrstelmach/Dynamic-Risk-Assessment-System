@@ -7,7 +7,7 @@ response1 = requests.post(
     json={'data_path': 'testdata/testdata.csv'}
     ).text
 response2 = requests.get(f'{URL}/scoring').text
-response3 = #put an API call here
+response3 = requests.get(f'{URL}/summarystats').text
 response4 = #put an API call here
 
 #combine all API responses
