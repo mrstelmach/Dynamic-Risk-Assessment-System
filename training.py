@@ -10,6 +10,8 @@ import pickle
 
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split
 
 with open('config.json', 'r') as f:
     config = json.load(f) 
@@ -29,12 +31,15 @@ def get_vars_from_pandas(pandas_df, target_col=None,
     return X, y
 
 
-def train_model(pandas_df, model_dir, target_col='exited'):
+def train_model(pandas_df, model_dir, target_col='exited', val_size=0.2):
     """
     Script for training logistic regression model and saving to model_dir.
     """
     
     X, y = get_vars_from_pandas(pandas_df, target_col)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X, y, test_size=val_size, random_state=0
+    )
     
     # use logistic regression for training
     lr_model = LogisticRegression(
@@ -45,8 +50,12 @@ def train_model(pandas_df, model_dir, target_col='exited'):
         warm_start=False
     )
     
-    # fit the logistic regression to data
-    lr_model.fit(X, y)
+    # fit the logistic regression to the training data
+    lr_model.fit(X_train, y_train)
+    
+    # get F1 score for the fitted model
+    print(f'F1 Score for training: {f1_score(y_train, lr_model.predict(X_train))}')
+    print(f'F1 Score for validation: {f1_score(y_val, lr_model.predict(X_val))}')
     
     # write the trained model to a file called trainedmodel.pkl
     with open(os.path.join(model_dir, 'trainedmodel.pkl'), 'wb') as model_file:
