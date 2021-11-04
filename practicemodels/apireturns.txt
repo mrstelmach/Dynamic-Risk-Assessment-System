@@ -1,7 +1,7 @@
-predictions_for_testdata/testdata.csv: [0, 1, 1, 1, 1]
+predictions_for_testdata/testdata.csv: [1, 1, 1, 0, 1]
 f1_score: 0.5714285714285715
 summary_statistics: [['lastmonth_activity', 'mean', 165.65384615384616], ['lastmonth_activity', 'median', 73.0], ['lastmonth_activity', 'std', 284.0332293669447], ['lastyear_activity', 'mean', 1502.923076923077], ['lastyear_activity', 'median', 955.0], ['lastyear_activity', 'std', 2192.6449584568304], ['number_of_employees', 'mean', 26.884615384615383], ['number_of_employees', 'median', 14.0], ['number_of_employees', 'std', 31.353885785435814]]
-execution_time: [0.30078001499987295, 0.5763932690006186]
+execution_time: [0.2841845260008995, 0.589984206999361]
 missing_percentage: [0.0, 0.0, 0.0, 0.0, 0.0]
 dependencies_check: 
 Package            Version Latest Type
@@ -30,6 +30,6 @@ pytz               2021.1  2021.3 wheel
 scikit-learn       0.24.1  1.0.1  wheel
 scipy              1.6.1   1.7.1  wheel
 seaborn            0.11.1  0.11.2 wheel
-setuptools         58.0.4  58.4.0 wheel
+setuptools         58.0.4  58.5.2 wheel
 threadpoolctl      2.1.0   3.0.0  wheel
 Werkzeug           1.0.1   2.0.2  wheel
