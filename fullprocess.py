@@ -1,14 +1,15 @@
+# -*- coding: utf-8 -*-
+
+"""
+Full pipeline for data ingestion, model drift checking, deployment 
+and reporting.
+"""
 
 import json
 import os
+
 from scoring import score_model
-"""
-import training
-import scoring
-import deployment
-import diagnostics
-import reporting
-"""
+
 
 with open('config.json', 'r') as f:
     config = json.load(f)
