@@ -36,12 +36,11 @@ else:
 # Check for model drift and if found redeploy a model.
 with open(os.path.join(prod_deployment_path, 'latestscore.txt'), 'r') as f:
     latest_score = float(f.read())
-current_score = score_model(prod_run=True)
+os.system('python training.py')
+current_score = score_model()
 
-if current_score < latest_score:
+if current_score > latest_score:
     print('Found model drift.')
-    os.system('python training.py')
-    score_model() # get the latest score for the newly trained model
     os.system('python deployment.py')
 else:
     print('Exit.')
